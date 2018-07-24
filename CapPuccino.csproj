@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="JCBytecodeDecoder.cs" />
+    <Compile Include="JcBytecodeDecoder.cs" />
     <Compile Include="Opcodes\ByteShortOperandOpcode.cs" />
     <Compile Include="Opcodes\IlookupSwitchOpcode.cs" />
     <Compile Include="Opcodes\InvokeInterfaceOpcode.cs" />
