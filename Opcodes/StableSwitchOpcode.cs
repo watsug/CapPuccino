@@ -21,6 +21,7 @@ namespace CapPuccino.Opcodes
             while (tmp > 0)
             {
                 _jumpOffsets.Add(sn.GetUshort());
+                tmp--;
             }
         }
 

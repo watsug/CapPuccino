@@ -25,6 +25,7 @@ namespace CapPuccino.Opcodes
             while (tmp > 0)
             {
                 _matchOffsets.Add(new MatchOffset() { Match = sn.GetUshort(), Offset = sn.GetUshort() });
+                tmp--;
             }
         }
 

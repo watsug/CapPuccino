@@ -40,7 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExceptionHandlerInfo.cs" />
+    <Compile Include="ExtendedMethodHeaderInfo.cs" />
+    <Compile Include="MethodComponent.cs" />
     <Compile Include="JcBytecodeDecoder.cs" />
+    <Compile Include="MethodHeaderInfo.cs" />
+    <Compile Include="MethodHeaderInfoBase.cs" />
+    <Compile Include="MethodInfo.cs" />
     <Compile Include="Opcodes\ByteShortOperandOpcode.cs" />
     <Compile Include="Opcodes\IlookupSwitchOpcode.cs" />
     <Compile Include="Opcodes\InvokeInterfaceOpcode.cs" />

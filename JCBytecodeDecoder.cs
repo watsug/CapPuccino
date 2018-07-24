@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using CapPuccino.Util;
 using CapPuccino.Opcodes;
+using System;
 
 namespace CapPuccino
 {
     public class JcBytecodeDecoder
     {
-        private StreamNavigator _bcodeStream;
         private List<IOpcode> _opcodes;
 
         public JcBytecodeDecoder()
@@ -15,21 +15,31 @@ namespace CapPuccino
 
         public void Decode(byte[] buff, int off, int len = -1)
         {
-            _bcodeStream = new StreamNavigator(buff, off, len);
+            StreamNavigator sn = new StreamNavigator(buff, off, len);
             _opcodes = new List<IOpcode>();
-            while (_bcodeStream.EoB)
+            while (!sn.EoB)
             {
-                _opcodes.Add(DecodeInsAndAdvance());
+                _opcodes.Add(DecodeInsAndAdvance(sn));
             }
         }
+
+        public void Decode(StreamNavigator sn)
+        {
+            _opcodes = new List<IOpcode>();
+            while (!sn.EoB)
+            {
+                _opcodes.Add(DecodeInsAndAdvance(sn));
+            }
+        }
+
 
         public IList<IOpcode> Opcodes => _opcodes.AsReadOnly();
 
         #region private methods
-        private IOpcode DecodeInsAndAdvance()
+        private IOpcode DecodeInsAndAdvance(StreamNavigator sn)
         {
             // peak-only, full advance is made on an opcode class side!
-            JcOpcodes op = (JcOpcodes)_bcodeStream.PeakByte();
+            JcOpcodes op = (JcOpcodes)sn.PeakByte();
             switch (op)
             {
                 case JcOpcodes.aaload:
@@ -119,7 +129,7 @@ namespace CapPuccino
                 case JcOpcodes.ssub:
                 case JcOpcodes.sushr:
                 case JcOpcodes.sxor:
-                    return new NoOperandsOpcode(_bcodeStream);
+                    return new NoOperandsOpcode(sn);
 
                 case JcOpcodes.aload:
                 case JcOpcodes.astore:
@@ -166,7 +176,7 @@ namespace CapPuccino
                 case JcOpcodes.sload:
                 case JcOpcodes.sstore:
                 case JcOpcodes.swap_x:
-                    return new SingleByteOperandOpcode(_bcodeStream);
+                    return new SingleByteOperandOpcode(sn);
 
                 case JcOpcodes.anewarray:
                 case JcOpcodes.getfield_a_w:
@@ -209,38 +219,38 @@ namespace CapPuccino
                 case JcOpcodes.putstatic_i:
                 case JcOpcodes.sipush:
                 case JcOpcodes.sspush:
-                    return new SingleShortOperandOpcode(_bcodeStream);
+                    return new SingleShortOperandOpcode(sn);
 
                 case JcOpcodes.checkcast:
                 case JcOpcodes.iinc_w:
                 case JcOpcodes.instanceof:
                 case JcOpcodes.sinc_w:
-                    return new ByteShortOperandOpcode(_bcodeStream);
+                    return new ByteShortOperandOpcode(sn);
 
                 case JcOpcodes.iinc:
                 case JcOpcodes.sinc:
-                    return new TwoBytesOperandOpcode(_bcodeStream);
+                    return new TwoBytesOperandOpcode(sn);
 
                 case JcOpcodes.iipush:
-                    return new UintOperandOpcode(_bcodeStream);
+                    return new UintOperandOpcode(sn);
 
                 case JcOpcodes.invokeinterface:
-                    return new InvokeInterfaceOpcode(_bcodeStream);
+                    return new InvokeInterfaceOpcode(sn);
 
                 case JcOpcodes.ilookupswitch:
-                    return new IlookupSwitchOpcode(_bcodeStream);
+                    return new IlookupSwitchOpcode(sn);
 
                 case JcOpcodes.itableswitch:
-                    return new ItableSwitchOpcode(_bcodeStream);
+                    return new ItableSwitchOpcode(sn);
 
                 case JcOpcodes.slookupswitch:
-                    return new SlookupSwitchOpcode(_bcodeStream);
+                    return new SlookupSwitchOpcode(sn);
 
                 case JcOpcodes.stableswitch:
-                    return new StableSwitchOpcode(_bcodeStream);
+                    return new StableSwitchOpcode(sn);
 
                 default:
-                    return null;
+                    throw new Exception("Undefined opcode: " + op.ToString("X"));
             };
         }
         #endregion

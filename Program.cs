@@ -1,4 +1,6 @@
-﻿using System.CodeDom.Compiler;
+﻿using CapPuccino.Util;
+using System;
+using System.CodeDom.Compiler;
 using System.IO;
 
 namespace CapPuccino
@@ -9,7 +11,16 @@ namespace CapPuccino
         {
             using (BinaryReader rd = new BinaryReader(File.OpenRead(args[0])))
             {
-                byte[] bcode = rd.ReadBytes((int)rd.BaseStream.Length);
+                byte[] method = rd.ReadBytes((int)rd.BaseStream.Length);
+
+                StreamNavigator sn = new StreamNavigator(method, 0);
+
+                MethodComponent c = MethodComponent.Factory(sn);
+                if (c.Tag != 0x07)
+                {
+                    throw new Exception("Component type not supported: " + c.Tag.ToString("X"));
+                }
+
                 JcBytecodeDecoder dec = new JcBytecodeDecoder();
                 dec.Decode(bcode, 0);
 

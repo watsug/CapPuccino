@@ -1,4 +1,6 @@
-﻿namespace CapPuccino.Util
+﻿using System;
+
+namespace CapPuccino.Util
 {
     public class StreamNavigator
     {
@@ -17,7 +19,7 @@
 
         public bool EoB
         {
-            get { return _off + _len >= _buff.Length; }
+            get { return _off >= _len; }
         }
 
         public byte PeakByte()
@@ -46,5 +48,12 @@
             return ret;
         }
 
+        public byte[] GetData(int size)
+        {
+            byte[] data = new byte[size];
+            Array.Copy(_buff, _off, data, 0, size);
+            _off += size;
+            return data;
+        }
     }
 }
