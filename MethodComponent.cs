@@ -25,11 +25,13 @@ namespace CapPuccino
             MethodComponent c = new MethodComponent();
             c._tag = sn.GetByte();
             c._size = sn.GetUshort();
-            byte handler_count = sn.GetByte();
+
+            StreamNavigator sn2 = new StreamNavigator(sn.GetData(c._size), 0);
+            byte handler_count = sn2.GetByte();
             c._exceptionHandlers = new ExceptionHandlerInfo[handler_count];
             for (int i = 0; i <  handler_count; i++)
             {
-                c._exceptionHandlers[i] = ExceptionHandlerInfo.Factory(sn);
+                c._exceptionHandlers[i] = ExceptionHandlerInfo.Factory(sn2);
             }
             return c;
         }
