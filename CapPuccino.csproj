@@ -40,8 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassDescriptorInfo.cs" />
+    <Compile Include="ClassRef.cs" />
+    <Compile Include="DescriptorComponent.cs" />
     <Compile Include="ExceptionHandlerInfo.cs" />
     <Compile Include="ExtendedMethodHeaderInfo.cs" />
+    <Compile Include="FieldDescriptorInfo.cs" />
+    <Compile Include="FieldRef.cs" />
     <Compile Include="MethodComponent.cs" />
     <Compile Include="JcBytecodeDecoder.cs" />
     <Compile Include="MethodHeaderInfo.cs" />
@@ -63,6 +68,7 @@
     <Compile Include="Opcodes\UintOperandOpcode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaticFieldRef.cs" />
     <Compile Include="Util\StreamNavigator.cs" />
   </ItemGroup>
   <ItemGroup>
