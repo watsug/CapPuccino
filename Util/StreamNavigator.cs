@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace CapPuccino.Util
 {
@@ -50,10 +51,22 @@ namespace CapPuccino.Util
 
         public byte[] GetData(int size)
         {
+            //throw new ArgumentException("Not enough data...");
             byte[] data = new byte[size];
             Array.Copy(_buff, _off, data, 0, size);
             _off += size;
             return data;
+        }
+
+        public T GetStruct<T>()
+        {
+            int rawSize = Marshal.SizeOf(typeof(T));
+            byte[] rawData = GetData(rawSize);
+            IntPtr buffer = Marshal.AllocHGlobal(rawSize);
+            Marshal.Copy(rawData, 0, buffer, rawSize);
+            T retobj = (T)Marshal.PtrToStructure(buffer, typeof(T));
+            Marshal.FreeHGlobal(buffer);
+            return retobj;
         }
     }
 }

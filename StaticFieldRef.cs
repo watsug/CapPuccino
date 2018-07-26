@@ -6,12 +6,12 @@ namespace CapPuccino
     public struct StaticFieldRef
     {
         // internal_ref
-        [FieldOffset(0)] byte padding;
-        [FieldOffset(1)] ushort offset;
+        [FieldOffset(0)] public byte padding;
+        [FieldOffset(1)] public ushort offset;
 
         // external_ref
-        [FieldOffset(0)] byte package_token;
-        [FieldOffset(1)] byte class_token;
-        [FieldOffset(2)] byte token;
+        [FieldOffset(0)] public byte package_token;
+        [FieldOffset(1)] public byte class_token;
+        [FieldOffset(2)] public byte token;
     }
 }

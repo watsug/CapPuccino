@@ -1,9 +1,7 @@
-﻿using CapPuccino.Opcodes;
+﻿using System.Collections.Generic;
+
 using CapPuccino.Util;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using CapPuccino.Opcodes;
 
 namespace CapPuccino
 {
@@ -14,9 +12,9 @@ namespace CapPuccino
 
         public static MethodInfo Factory(StreamNavigator sn)
         {
-            MethodInfo mi = new MethodInfo();
-            mi._mhi = MethodHeaderInfoFactory.Factory(sn);
-            mi._bytecode = 
+            MethodInfo mi = new MethodInfo {_mhi = MethodHeaderInfoFactory.Factory(sn)};
+            //mi._bytecode = 
+            return mi;
         }
     }
 }

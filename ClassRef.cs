@@ -1,11 +1,12 @@
-﻿namespace CapPuccino
-{
-    public class ClassRef
-    {
-        private ushort _internal_class_ref;
+﻿using System.Runtime.InteropServices;
 
-        public ushort InternalClassRef => _internal_class_ref;
-        public byte PackageToken => (byte)(_internal_class_ref >> 8);
-        public byte ClassToken => (byte)(_internal_class_ref & 0xff);
+namespace CapPuccino
+{
+    [StructLayout(LayoutKind.Explicit)]
+    public struct ClassRef
+    {
+        [FieldOffset(0)] public ushort internal_class_ref;
+        [FieldOffset(0)] public byte package_token;
+        [FieldOffset(1)] public byte class_token;
     }
 }

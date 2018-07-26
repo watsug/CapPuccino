@@ -49,6 +49,7 @@
     <Compile Include="FieldRef.cs" />
     <Compile Include="MethodComponent.cs" />
     <Compile Include="JcBytecodeDecoder.cs" />
+    <Compile Include="MethodDescriptorInfo.cs" />
     <Compile Include="MethodHeaderInfo.cs" />
     <Compile Include="MethodHeaderInfoFactory.cs" />
     <Compile Include="MethodInfo.cs" />
@@ -69,6 +70,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StaticFieldRef.cs" />
+    <Compile Include="TypeDescriptor.cs" />
+    <Compile Include="TypeDescriptorInfo.cs" />
     <Compile Include="Util\StreamNavigator.cs" />
   </ItemGroup>
   <ItemGroup>

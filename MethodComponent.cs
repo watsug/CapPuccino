@@ -5,34 +5,32 @@ namespace CapPuccino
 {
     public class MethodComponent
     {
-        private byte _tag;
-        private ushort _size;
-        private byte _handlerCount;
-        private ExceptionHandlerInfo[] _exceptionHandlers;
-        private List<MethodInfo> _methods = new List<MethodInfo>();
-
         private MethodComponent()
         {
         }
 
-        public byte Tag => _tag;
-        public ushort Size => _size;
-        public ExceptionHandlerInfo[] ExceptionHandlers => _exceptionHandlers;
-        public List<MethodInfo> Methods => _methods;
+        public byte Tag { get; private set; }
+        public ushort Size { get; private set; }
+        public ExceptionHandlerInfo[] ExceptionHandlers { get; private set; }
+        public MethodInfo[] Methods { get; }
 
         public static MethodComponent Factory(StreamNavigator sn)
         {
-            MethodComponent c = new MethodComponent();
-            c._tag = sn.GetByte();
-            c._size = sn.GetUshort();
-
-            StreamNavigator sn2 = new StreamNavigator(sn.GetData(c._size), 0);
-            byte handler_count = sn2.GetByte();
-            c._exceptionHandlers = new ExceptionHandlerInfo[handler_count];
-            for (int i = 0; i <  handler_count; i++)
+            MethodComponent c = new MethodComponent
             {
-                c._exceptionHandlers[i] = ExceptionHandlerInfo.Factory(sn2);
+                Tag = sn.GetByte(),
+                Size = sn.GetUshort()
+            };
+
+            byte handlerCount = sn.GetByte();
+            c.ExceptionHandlers = new ExceptionHandlerInfo[handlerCount];
+            for (int i = 0; i <  handlerCount; i++)
+            {
+                c.ExceptionHandlers[i] = sn.GetStruct<ExceptionHandlerInfo>();
             }
+
+            // TODO:
+            // c._methods = ...
             return c;
         }
     }

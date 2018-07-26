@@ -1,26 +1,13 @@
-﻿using CapPuccino.Util;
+﻿using System.Runtime.InteropServices;
 
 namespace CapPuccino
 {
+    [StructLayout(LayoutKind.Explicit)]
     public class ExceptionHandlerInfo
     {
-        private ushort _start_offset;
-        private ushort _bitfield;
-        private ushort _handler_offset;
-        private ushort _catch_type_index;
-
-        private ExceptionHandlerInfo()
-        {
-        }
-
-        public static ExceptionHandlerInfo Factory(StreamNavigator sn)
-        {
-            ExceptionHandlerInfo exHandlerInfo = new ExceptionHandlerInfo();
-            exHandlerInfo._start_offset = sn.GetUshort();
-            exHandlerInfo._bitfield = sn.GetUshort();
-            exHandlerInfo._handler_offset = sn.GetUshort();
-            exHandlerInfo._catch_type_index = sn.GetUshort();
-            return exHandlerInfo;
-        }
+        [FieldOffset(0)] public ushort start_offset;
+        [FieldOffset(2)] public ushort bitfield;
+        [FieldOffset(4)] public ushort handler_offset;
+        [FieldOffset(6)] public ushort catch_type_index;
     }
 }

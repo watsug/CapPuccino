@@ -22,15 +22,15 @@ namespace CapPuccino
                 }
 
                 JcBytecodeDecoder dec = new JcBytecodeDecoder();
-                dec.Decode(bcode, 0);
+                //dec.Decode(bcode, 0);
 
-                using (TextWriter wr = new IndentedTextWriter(new StreamWriter(File.Create(args[1]))))
-                {
-                    foreach (var opcode in dec.Opcodes)
-                    {
-                        wr.WriteLine(opcode.ToString());
-                    }
-                }
+                //using (TextWriter wr = new IndentedTextWriter(new StreamWriter(File.Create(args[1]))))
+                //{
+                //    foreach (var opcode in dec.Opcodes)
+                //    {
+                //        wr.WriteLine(opcode.ToString());
+                //    }
+                //}
             }
         }
     }

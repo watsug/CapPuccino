@@ -1,23 +1,14 @@
-﻿namespace CapPuccino
+﻿using System.Runtime.InteropServices;
+
+namespace CapPuccino
 {
-    public class FieldDescriptorInfo
+    [StructLayout(LayoutKind.Explicit)]
+    public struct FieldDescriptorInfo
     {
-        private byte _token;
-        private byte _access_flags;
-        union {
-            static_field_ref static_field
-            {
-                class_ref class
-                u1 token
-            }
-            instance_field
-        }
-        field_ref
-        union
-        {
-            u2 primitive_type
-            u2 reference_type
-        }
-        type
+        [FieldOffset(0)] public byte token;
+        [FieldOffset(1)] public byte access_flags;
+        [FieldOffset(2)] public FieldRef field_ref; // 6 bytes
+        [FieldOffset(8)] public ushort primitive_type;
+        [FieldOffset(8)] public ushort reference_type;
     }
 }
