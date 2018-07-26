@@ -8,8 +8,9 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>CapPuccino</RootNamespace>
     <AssemblyName>CapPuccino</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -20,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -29,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -40,19 +43,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClassDescriptorInfo.cs" />
-    <Compile Include="ClassRef.cs" />
-    <Compile Include="DescriptorComponent.cs" />
-    <Compile Include="ExceptionHandlerInfo.cs" />
-    <Compile Include="ExtendedMethodHeaderInfo.cs" />
-    <Compile Include="FieldDescriptorInfo.cs" />
-    <Compile Include="FieldRef.cs" />
-    <Compile Include="MethodComponent.cs" />
-    <Compile Include="JcBytecodeDecoder.cs" />
-    <Compile Include="MethodDescriptorInfo.cs" />
-    <Compile Include="MethodHeaderInfo.cs" />
-    <Compile Include="MethodHeaderInfoFactory.cs" />
-    <Compile Include="MethodInfo.cs" />
+    <Compile Include="Core\MethodAccessFlags.cs" />
+    <Compile Include="Core\ClassAccessFlags.cs" />
+    <Compile Include="Core\ClassDescriptorInfo.cs" />
+    <Compile Include="Core\ClassRef.cs" />
+    <Compile Include="Core\DescriptorComponent.cs" />
+    <Compile Include="Core\ExceptionHandlerInfo.cs" />
+    <Compile Include="Core\ExtendedMethodHeaderInfo.cs" />
+    <Compile Include="Core\FieldDescriptorInfo.cs" />
+    <Compile Include="Core\FieldRef.cs" />
+    <Compile Include="Core\MethodComponent.cs" />
+    <Compile Include="Core\JcBytecodeDecoder.cs" />
+    <Compile Include="Core\MethodDescriptorInfo.cs" />
+    <Compile Include="Core\MethodHeaderInfo.cs" />
+    <Compile Include="Core\MethodHeaderInfoFactory.cs" />
+    <Compile Include="Core\MethodInfo.cs" />
     <Compile Include="Opcodes\ByteShortOperandOpcode.cs" />
     <Compile Include="Opcodes\IlookupSwitchOpcode.cs" />
     <Compile Include="Opcodes\InvokeInterfaceOpcode.cs" />
@@ -69,13 +74,23 @@
     <Compile Include="Opcodes\UintOperandOpcode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StaticFieldRef.cs" />
-    <Compile Include="TypeDescriptor.cs" />
-    <Compile Include="TypeDescriptorInfo.cs" />
+    <Compile Include="Core\StaticFieldRef.cs" />
+    <Compile Include="Core\TypeDescriptor.cs" />
+    <Compile Include="Core\TypeDescriptorInfo.cs" />
     <Compile Include="Util\StreamNavigator.cs" />
+    <Compile Include="Util\Util.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="CAP.v1.1.bt" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.IO.Compression">
+      <Version>4.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.IO.Compression.ZipFile">
+      <Version>4.3.0</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

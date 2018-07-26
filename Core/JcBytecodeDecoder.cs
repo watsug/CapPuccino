@@ -3,7 +3,7 @@ using CapPuccino.Util;
 using CapPuccino.Opcodes;
 using System;
 
-namespace CapPuccino
+namespace CapPuccino.Core
 {
     public class JcBytecodeDecoder
     {

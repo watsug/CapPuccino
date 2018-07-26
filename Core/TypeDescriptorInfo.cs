@@ -1,4 +1,4 @@
-﻿namespace CapPuccino
+﻿namespace CapPuccino.Core
 {
     public class TypeDescriptorInfo
     {

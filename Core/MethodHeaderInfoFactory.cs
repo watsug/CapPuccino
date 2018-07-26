@@ -1,6 +1,6 @@
 ﻿using CapPuccino.Util;
 
-namespace CapPuccino
+namespace CapPuccino.Core
 {
     public abstract class MethodHeaderInfoFactory
     {

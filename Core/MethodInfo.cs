@@ -3,7 +3,7 @@
 using CapPuccino.Util;
 using CapPuccino.Opcodes;
 
-namespace CapPuccino
+namespace CapPuccino.Core
 {
     public class MethodInfo
     {

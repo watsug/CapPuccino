@@ -1,7 +1,7 @@
 ﻿using CapPuccino.Util;
 using System.Collections.Generic;
 
-namespace CapPuccino
+namespace CapPuccino.Core
 {
     public class MethodComponent
     {
@@ -27,6 +27,7 @@ namespace CapPuccino
             for (int i = 0; i <  handlerCount; i++)
             {
                 c.ExceptionHandlers[i] = sn.GetStruct<ExceptionHandlerInfo>();
+                c.ExceptionHandlers[i].CorrectEndianness();
             }
 
             // TODO:
