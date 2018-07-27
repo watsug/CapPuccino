@@ -15,7 +15,7 @@ namespace CapPuccino.Core
             return mhi;
         }
 
-        public byte Flags => (byte)((_bitfield >> 4) & 0x0f);
+        public MethodHeaderFlags Flags => (MethodHeaderFlags)((_bitfield >> 4) & 0x0f);
         public virtual byte MaxStack => (byte)(_bitfield & 0x0f);
         public virtual byte NArgs => (byte)((_bitfield2 >> 4) & 0x0f);
         public virtual byte MaxLocals => (byte)(_bitfield2 & 0x0f);

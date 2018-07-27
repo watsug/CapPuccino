@@ -54,7 +54,9 @@
     <Compile Include="Core\FieldRef.cs" />
     <Compile Include="Core\MethodComponent.cs" />
     <Compile Include="Core\JcBytecodeDecoder.cs" />
+    <Compile Include="Core\MethodDescriptor.cs" />
     <Compile Include="Core\MethodDescriptorInfo.cs" />
+    <Compile Include="Core\MethodHeaderFlags.cs" />
     <Compile Include="Core\MethodHeaderInfo.cs" />
     <Compile Include="Core\MethodHeaderInfoFactory.cs" />
     <Compile Include="Core\MethodInfo.cs" />
@@ -78,6 +80,7 @@
     <Compile Include="Core\TypeDescriptor.cs" />
     <Compile Include="Core\TypeDescriptorInfo.cs" />
     <Compile Include="Util\StreamNavigator.cs" />
+    <Compile Include="Util\TextDump.cs" />
     <Compile Include="Util\Util.cs" />
   </ItemGroup>
   <ItemGroup>

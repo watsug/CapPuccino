@@ -1,5 +1,4 @@
 ﻿using CapPuccino.Util;
-using System.Collections.Generic;
 
 namespace CapPuccino.Core
 {
@@ -12,7 +11,7 @@ namespace CapPuccino.Core
         public byte Tag { get; private set; }
         public ushort Size { get; private set; }
         public ExceptionHandlerInfo[] ExceptionHandlers { get; private set; }
-        public MethodInfo[] Methods { get; }
+        public byte[] Methods { get; private set; }
 
         public static MethodComponent Factory(StreamNavigator sn)
         {
@@ -22,6 +21,8 @@ namespace CapPuccino.Core
                 Size = sn.GetUshort()
             };
 
+            int start = sn.Position;
+
             byte handlerCount = sn.GetByte();
             c.ExceptionHandlers = new ExceptionHandlerInfo[handlerCount];
             for (int i = 0; i <  handlerCount; i++)
@@ -30,8 +31,7 @@ namespace CapPuccino.Core
                 c.ExceptionHandlers[i].CorrectEndianness();
             }
 
-            // TODO:
-            // c._methods = ...
+            c.Methods = sn.GetData(c.Size - (sn.Position - start));
             return c;
         }
     }

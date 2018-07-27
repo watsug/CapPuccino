@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 
 using CapPuccino.Util;
 using CapPuccino.Core;
@@ -15,50 +16,26 @@ namespace CapPuccino
             {
                 DescriptorComponent desc = null;
                 MethodComponent methods = null;
-                foreach (var entry in  arch.Entries)
+
+                var methodCap = arch.Entries.Where(v => v.Name.ToLower() == "method.cap").SingleOrDefault();
+                using (BinaryReader rd = new BinaryReader(methodCap.Open()))
                 {
-                    switch (entry.Name.ToLower())
-                    {
-                        case "descriptor.cap":
-                        {
-                            using (BinaryReader rd = new BinaryReader(entry.Open()))
-                            {
-                                StreamNavigator sn = new StreamNavigator(rd.ReadBytes((int)rd.BaseStream.Length), 0);
-                                desc = DescriptorComponent.Factory(sn);
-                            }
-                        } break;
-                        case "method.cap":
-                        {
-                            using (BinaryReader rd = new BinaryReader(entry.Open()))
-                            {
-                                StreamNavigator sn = new StreamNavigator(rd.ReadBytes((int)rd.BaseStream.Length), 0);
-                                methods = MethodComponent.Factory(sn);
-                            }
-                        } break;
-                    }
+                    StreamNavigator sn = new StreamNavigator(rd.ReadBytes((int)rd.BaseStream.Length), 0);
+                    methods = MethodComponent.Factory(sn);
                 }
-                using (BinaryReader rd = new BinaryReader(File.OpenRead(args[0])))
+
+                var descriptorCap = arch.Entries.Where(v => v.Name.ToLower() == "descriptor.cap").SingleOrDefault();
+                using (BinaryReader rd = new BinaryReader(descriptorCap.Open()))
                 {
-                    byte[] method = rd.ReadBytes((int) rd.BaseStream.Length);
+                    StreamNavigator sn = new StreamNavigator(rd.ReadBytes((int)rd.BaseStream.Length), 0);
+                    desc = DescriptorComponent.Factory(sn, methods);
+                }
 
-                    StreamNavigator sn = new StreamNavigator(method, 0);
-
-                    MethodComponent c = MethodComponent.Factory(sn);
-                    if (c.Tag != 0x07)
-                    {
-                        throw new Exception("Component type not supported: " + c.Tag.ToString("X"));
-                    }
-
-                    JcBytecodeDecoder dec = new JcBytecodeDecoder();
-                    //dec.Decode(bcode, 0);
-
-                    //using (TextWriter wr = new IndentedTextWriter(new StreamWriter(File.Create(args[1]))))
-                    //{
-                    //    foreach (var opcode in dec.Opcodes)
-                    //    {
-                    //        wr.WriteLine(opcode.ToString());
-                    //    }
-                    //}
+                using (TextWriter wr = new StreamWriter(File.Create(args[0] + ".txt")))
+                {
+                    TextDump dump = new TextDump(wr);
+                    desc.Dump(dump, 0);
+                    wr.Flush();
                 }
             }
         }

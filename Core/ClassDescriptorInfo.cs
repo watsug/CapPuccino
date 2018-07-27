@@ -12,9 +12,9 @@ namespace CapPuccino.Core
         private ushort _methodCount;
         private ClassRef[] _interfaces;
         private FieldDescriptorInfo[] _fields;
-        private MethodDescriptorInfo[] _methods;
+        private MethodDescriptor[] _methods;
 
-        public static ClassDescriptorInfo Factory(StreamNavigator sn)
+        public static ClassDescriptorInfo Factory(StreamNavigator sn, MethodComponent methods)
         {
             ClassDescriptorInfo cdi = new ClassDescriptorInfo
             {
@@ -30,7 +30,7 @@ namespace CapPuccino.Core
 
             cdi._interfaces = new ClassRef[cdi._interfaceCount];
             cdi._fields = new FieldDescriptorInfo[cdi._fieldCount];
-            cdi._methods = new MethodDescriptorInfo[cdi._methodCount];
+            cdi._methods = new MethodDescriptor[cdi._methodCount];
 
             int i = 0;
             for (i = 0; i < cdi._interfaceCount; i++)
@@ -45,12 +45,26 @@ namespace CapPuccino.Core
             }
             for (i = 0; i < cdi._methodCount; i++)
             {
-                cdi._methods[i] = sn.GetStruct<MethodDescriptorInfo>();
-                cdi._methods[i].CorrectEndianness();
+                var mdi = sn.GetStruct<MethodDescriptorInfo>();
+                mdi.CorrectEndianness();
+                cdi._methods[i] = new MethodDescriptor(mdi, cdi._accessFlags.HasFlag(ClassAccessFlags.ACC_INTERFACE) ? null : methods);
             }
             return cdi;
         }
 
+        public void Dump(TextDump dump, int ident)
+        {
+            dump.WriteLine(ident, $"Token: {_token}");
+            dump.WriteLine(ident, $"Access Flags: {_accessFlags}");
+            dump.WriteLine(ident, $"Method Count: {_methodCount}");
 
+            dump.WriteLine(ident, "");
+            dump.WriteLine(ident, "Methods:");
+            foreach (var method in _methods)
+            {
+                dump.WriteLine(ident + 1, "");
+                method.Dump(dump, ident + 1);
+            }
+        }
     }
 }
